@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mxfile host="app.diagrams.net" modified="2026-11-05T12:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="serasa-architecture" name="Arquitetura">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="&lt;b&gt;Serasa Experian | Pesagem e transporte de grãos&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:14px;color:#64748B&quot;&gt;Arquitetura implementada • Java 21 • Quarkus • mensageria assíncrona&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=26;fontColor=#102A43;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1700" height="66" as="geometry"/>
+        </mxCell>
+        <mxCell id="z1" value="&lt;b&gt;ORIGEM DAS LEITURAS&lt;/b&gt;" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;verticalAlign=top;spacingTop=16;fontSize=16;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="300" height="710" as="geometry"/>
+        </mxCell>
+        <mxCell id="z2" value="&lt;b&gt;PLATAFORMA DE APLICAÇÃO&lt;/b&gt;" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;verticalAlign=top;spacingTop=16;fontSize=16;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="365" y="110" width="850" height="710" as="geometry"/>
+        </mxCell>
+        <mxCell id="z3" value="&lt;b&gt;PLATAFORMA DE DADOS&lt;/b&gt;" style="rounded=1;arcSize=12;html=1;whiteSpace=wrap;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;verticalAlign=top;spacingTop=16;fontSize=16;fontColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="110" width="520" height="710" as="geometry"/>
+        </mxCell>
+        <mxCell id="esp" value="&lt;b&gt;ESP32 + balança&lt;/b&gt;&lt;br&gt;Leituras contínuas a cada 100 ms&lt;br&gt;HTTP fire-and-forget" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E8F2FF;strokeColor=#4F83CC;strokeWidth=2;fontColor=#163A63;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="220" width="230" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="admin" value="&lt;b&gt;Operação / cadastro&lt;/b&gt;&lt;br&gt;Filiais • caminhões • grãos&lt;br&gt;Balanças • transações" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1ECFF;strokeColor=#8673C5;strokeWidth=2;fontColor=#3E336D;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="465" width="230" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="api" value="&lt;b&gt;API REST Quarkus&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;POST /api/readings&lt;br&gt;POST /api/branches, /trucks, /grains,&lt;br&gt;/scales e /transports&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E8F2FF;strokeColor=#4F83CC;strokeWidth=2;fontColor=#163A63;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="205" width="300" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="auth" value="&lt;b&gt;Autorização da balança&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;Localiza escala ativa pelo ID&lt;br&gt;Valida X-Scale-Token via SHA-256&lt;br&gt;Publica leitura e responde 202&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E6FAF7;strokeColor=#2A9D8F;strokeWidth=2;fontColor=#164E4A;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="785" y="205" width="360" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="event" value="&lt;b&gt;Evento de leitura&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;ID • placa • peso • timestamp&lt;br&gt;Chave Kafka = ID da balança&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4DD;strokeColor=#D99A23;strokeWidth=2;fontColor=#664600;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="795" y="440" width="340" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="consumer" value="&lt;b&gt;Consumidor Quarkus&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;SmallRye Reactive Messaging&lt;br&gt;ReadingProcessor • transação JPA&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#E8F2FF;strokeColor=#4F83CC;strokeWidth=2;fontColor=#163A63;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="785" y="610" width="360" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="register" value="&lt;b&gt;Serviços de cadastro&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;RegistrationResource&lt;br&gt;Abre demanda e captura preço do grão&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#F1ECFF;strokeColor=#8673C5;strokeWidth=2;fontColor=#3E336D;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="505" width="300" height="115" as="geometry"/>
+        </mxCell>
+        <mxCell id="obs" value="&lt;b&gt;Operação da aplicação&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;Health • métricas Prometheus&lt;br&gt;OpenAPI / Swagger UI&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;strokeWidth=1.5;fontColor=#334155;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="410" y="675" width="300" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="kafka" value="&lt;b&gt;Apache Kafka&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;Tópico: &lt;b&gt;scale-readings&lt;/b&gt;&lt;br&gt;Buffer assíncrono entre HTTP e processamento&lt;br&gt;Chave por balança preserva ordenação da partição&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFF4DD;strokeColor=#D99A23;strokeWidth=2;fontColor=#664600;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="260" width="400" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="pg" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;Persistência via Hibernate ORM / JPA&lt;br&gt;Migrações Flyway&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#EAF7EA;strokeColor=#4F9D69;strokeWidth=2;fontColor=#214D2D;fontSize=15;spacing=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="500" width="400" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tables" value="&lt;b&gt;Dados de negócio&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:13px&quot;&gt;branch • truck • grain_type • weighing_scale&lt;br&gt;transport • inventory • weighing&lt;br&gt;scale_state • processed_reading&lt;/font&gt;" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#94A3B8;strokeWidth=1.5;fontColor=#334155;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="665" width="400" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="leituras HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4F83CC;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="esp" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="valida e aceita" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#2A9D8F;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="api" target="auth">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="emite evento" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#D99A23;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="auth" target="event">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="publicação assíncrona" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#D99A23;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="event" target="kafka">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="consumo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#D99A23;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="kafka" target="consumer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="gravação transacional" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4F9D69;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="consumer" target="pg">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="esquema" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#4F9D69;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="pg" target="tables">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="REST de cadastro" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8673C5;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="admin" target="register">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="cadastros / demanda" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#8673C5;strokeWidth=2;endArrow=block;endFill=1;fontSize=12;fontColor=#475569;" edge="1" parent="1" source="register" target="pg">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="logic" value="&lt;b&gt;Processamento da pesagem&lt;/b&gt;  •  deduplicação por readingId  •  estabilização: 20 amostras / tolerância 2 kg  •  associação à transação ativa  •  peso líquido, custo, margem e preço estimado  •  atualização de estoque e conclusão da demanda" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#94A3B8;strokeWidth=1.5;fontColor=#334155;fontSize=15;spacing=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="850" width="1395" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="deploy" value="&lt;b&gt;Execução atual:&lt;/b&gt; Docker Compose com app, Kafka e PostgreSQL (ou app local em modo dev conectando aos serviços).  &lt;b&gt;Escala cloud descrita:&lt;/b&gt; app stateless em Kubernetes/ECS, Kafka e PostgreSQL gerenciados, TLS/segredos/observabilidade — recomendações documentadas, não recursos provisionados neste repositório." style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;dashed=1;dashPattern=6 4;fontColor=#475569;fontSize=14;spacing=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="965" width="1720" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Fluxos:&lt;/b&gt; ingestão assíncrona (azul/âmbar)  •  persistência (verde)  •  cadastro e abertura de demanda (roxo)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#64748B;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1055" width="1720" height="28" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
