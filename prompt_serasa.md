@@ -152,3 +152,40 @@ Gere um projeto executável contendo:
 6. Execute os testes e, se o ambiente permitir, suba a aplicação e verifique os principais fluxos.
 7. Revise a consistência entre código, migrações, configuração, testes e documentação.
 8. No final, informe o que foi implementado, quais comandos foram executados, os resultados e qualquer limitação que impeça a execução.
+
+## Regras a implementar
+
+1. Cada caminhão deve estar associado a uma transação de transporte que informe o tipo de grão que ele buscará antes de sair para a fazenda.
+2. Ao retornar à filial, a pesagem deve ser associada à transação ativa daquele caminhão, à filial e ao tipo de grão previsto.
+3. Enquanto houver caminhão na balança, o ESP32 envia leituras a cada 100 ms sem aguardar resposta. A aplicação deve aceitar esse comportamento fire-and-forget sem bloquear o processamento das leituras.
+4. O caminhão pode receber uma nova demanda após concluir a descarga. Implemente estados e validações para impedir transações simultâneas indevidas para o mesmo caminhão e permitir uma nova transação após a conclusão da anterior.
+5. Cada tipo de grão deve possuir um preço de compra por tonelada. O preço usado em cada transação deve ser preservado no histórico para que alterações futuras no cadastro não modifiquem custos já registrados.
+6. A margem de lucro deve permanecer entre 5% e 20%.
+7. A margem deve ser inversamente proporcional à quantidade disponível do tipo de grão: quanto menor a disponibilidade, maior a margem. O cálculo deve ser determinístico e testável. Como o PDF não informa a fórmula, defina e documente uma fórmula adequada, incluindo limites, unidades, arredondamento e comportamento para disponibilidade zero ou desconhecida.
+8. O preço de venda deve ser calculado usando o preço de compra e a margem vigente, preservando os valores aplicados na transação.
+
+## Implementação
+
+- Inspecione a estrutura do projeto e as instruções locais antes de editar arquivos.
+- Localize as entidades, serviços, endpoints e persistência envolvidos em caminhões, grãos, filiais, balanças, transações, pesagens e estoque.
+- Implemente as regras na camada de domínio ou serviço apropriada, evitando duplicar lógica em endpoints.
+- Garanta que as alterações de transação, pesagem e disponibilidade sejam consistentes e seguras contra concorrência.
+- Valide estados inválidos, como caminhão sem transação ativa, tentativa de iniciar uma segunda demanda antes de concluir a primeira, peso líquido negativo ou tipo de grão incompatível com a transação.
+- Preserve compatibilidade com o formato de leitura existente da balança.
+- Não altere partes fora do escopo, exceto quando necessário para integrar corretamente as regras.
+
+## Indentação e estilo do código
+
+Ao concluir as alterações, padronize a indentação dos arquivos modificados:
+
+- Java: 4 espaços por nível, sem tabulações.
+- YAML e XML: mantenha indentação consistente com o padrão do arquivo.
+- Não reformate arquivos não relacionados.
+- Se o projeto tiver formatter configurado, use-o. Caso contrário, aplique o padrão acima aos arquivos alterados.
+
+## Testes e entrega
+
+- Crie ou atualize testes para cobrir as regras implementadas, incluindo limites da margem, relação entre disponibilidade e margem, vínculo da transação com o tipo de grão, conclusão de uma demanda e início de uma nova demanda.
+- Execute os testes disponíveis e informe os comandos e resultados reais.
+- Revise a consistência entre código, banco de dados, testes e documentação.
+- Ao final, resuma os arquivos alterados, as decisões tomadas para regras não especificadas no PDF e qualquer limitação encontrada.
